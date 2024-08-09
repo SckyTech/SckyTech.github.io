@@ -1,22 +1,22 @@
 onload = function () {
-    const lat = document.getElementById("lat");
-    const lon = document.getElementById("lon");
+    const [lat, lon] = document.querySelectorAll("input");
 
     const horaires = document.getElementById("horaires");
 
     function updateFront() {
         SunCalc.addTime(Math.atan(1.0 / (1.0 + 1.0 / Math.tan(
-            SunCalc.getPosition(SunCalc.getTimes(new Date(), lat.value, lon.value).solarNoon, lat.value, lon.value).altitude
+            SunCalc.getPosition(SunCalc.getTimes(new Date(), Number(lat.value), Number(lon.value)).solarNoon, Number(lat.value), Number(lon.value)).altitude
         ))) * (180.0 / Math.PI), "pepsi", "peps");
 
-        const times = SunCalc.getTimes(new Date(), lat.value, lon.value);
+        SunCalc.addTime(-16.5, "couscous", "lapin");
 
+        const times = SunCalc.getTimes(new Date(), lat.value, lon.value);
 
         const sunset = new Date(times["sunset"]);
         sunset.setMinutes(sunset.getMinutes() + 90);
     
         horaires.innerText = [
-            {time: times["nightEnd"], pray: "Fajr"},
+            {time: times["couscous"], pray: "Fajr"},
             {time: times["sunrise"], pray: "Shurq"},
             {time: times["solarNoon"], pray: "Zohr"},
             {time: times["peps"], pray: "Ashr"},
@@ -32,6 +32,7 @@ onload = function () {
             lon.value = pos.coords.longitude;
 
             updateFront();
+            return;
         });
     } else {
         alert("Geolocation is not supported by this browser.");
