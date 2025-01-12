@@ -95,7 +95,7 @@ onload = function () {
             horairesmois.innerHTML += 
             `<br>${months[lastMonth.getMonth()]} ${lastMonth.getFullYear()}<br><table>
                     <tr>
-                        <th>heures</th>
+                        <th>Jours</th>
                         <th>Fajr</th>
                         <th>Shurq</th>
                         <th>Zohr</th>
