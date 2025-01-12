@@ -90,30 +90,32 @@ onload = function () {
     const months = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"]
 
     window.onscroll = function(ev) {
-        if ((window.innerHeight + Math.round(window.scrollY)) < document.body.offsetHeight)
-            return;
-        
-        horairesmois.innerHTML += 
-        `<br>${months[lastMonth.getMonth()]} ${lastMonth.getFullYear()}<br><table>
-                <tr>
-                    <th>heures</th>
-                    <th>Fajr</th>
-                    <th>Shurq</th>
-                    <th>Zohr</th>
-                    <th>Ashr</th>
-                    <th>Magrb</th>
-                    <th>Isha</th>
-                </tr>
-                ${Array.from(new Array(daysInMonth(lastMonth.getMonth(), lastMonth.getFullYear()) - lastMonth.getDate() + 1), (_, i) => `
-                    <tr class="day" data-value="${lastMonth.getDate() + i} ${lastMonth.getMonth()} ${lastMonth.getFullYear()}"></tr>`).join("")}
-            </table>`;
-        
-        updateFront(copy_times, Number(lat.value), Number(lon.value));
-        
-        lastMonth.setDate(1);
-        
-        lastMonth.setMonth(lastMonth.getMonth() + 1);
+        while ((window.innerHeight + Math.round(window.scrollY)) > document.body.offsetHeight) {
+            
+            horairesmois.innerHTML += 
+            `<br>${months[lastMonth.getMonth()]} ${lastMonth.getFullYear()}<br><table>
+                    <tr>
+                        <th>heures</th>
+                        <th>Fajr</th>
+                        <th>Shurq</th>
+                        <th>Zohr</th>
+                        <th>Ashr</th>
+                        <th>Magrb</th>
+                        <th>Isha</th>
+                    </tr>
+                    ${Array.from(new Array(daysInMonth(lastMonth.getMonth(), lastMonth.getFullYear()) - lastMonth.getDate() + 1), (_, i) => `
+                        <tr class="day" data-value="${lastMonth.getDate() + i} ${lastMonth.getMonth()} ${lastMonth.getFullYear()}"></tr>`).join("")}
+                </table>`;
+            
+            updateFront(copy_times, Number(lat.value), Number(lon.value));
+            
+            lastMonth.setDate(1);
+            
+            lastMonth.setMonth(lastMonth.getMonth() + 1);
+        }
     };
+
+    window.onresize = window.onscroll;
 
     window.onscroll();
 };
